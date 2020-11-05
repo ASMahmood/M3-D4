@@ -114,6 +114,16 @@
           .then(() => (addToCart(), removeBook()));
       };
 
+      const removeItem = function () {
+        const buttons = document.querySelectorAll("li a.btn");
+        buttons.forEach((event) =>
+          event.addEventListener("click", (e) => {
+            let listItem = event.parentNode;
+            listItem.remove();
+          })
+        );
+      };
+
       const addToCart = function () {
         const buttons = document.querySelectorAll(
           ".card-text > a.btn:first-of-type"
@@ -130,7 +140,9 @@
               event.parentNode.previousElementSibling.previousElementSibling
                 .innerText;
             let newListItem = document.createElement("li");
-            newListItem.innerHTML = `<p class="my-0">${bookTitle}</p>`;
+            newListItem.classList.add("d-flex");
+            newListItem.innerHTML = `<p class="my-1">${bookTitle}</p>
+                                     <a class="btn" onclick="removeItem()"><i class="far fa-trash-alt"></i></a>`;
             basketOl.appendChild(newListItem);
           })
         );
