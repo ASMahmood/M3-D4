@@ -92,7 +92,10 @@
                                                 <p>${category}</p>
                                                 <p>${asin}</p>
                                             </div>
-                                            <a href="#" class="btn btn-primary">£ ${price}</a>
+                                            <div class="card-text d-flex justify-content-around">
+                                                <a href="#" class="btn btn-primary">£ ${price}</a>
+                                                <a href="#" class="btn btn-primary">SKIP</a>
+                                            </div>                                      
                                         </div>
                                     </div>`;
 
@@ -103,7 +106,9 @@
       };
 
       const addToCart = function () {
-        const buttons = document.querySelectorAll(".card-body > a.btn");
+        const buttons = document.querySelectorAll(
+          ".card-text > a.btn:first-of-type"
+        );
         console.log(buttons);
         buttons.forEach((event) =>
           event.addEventListener("click", (e) => {
@@ -113,7 +118,8 @@
 
             let basketOl = document.querySelector("#basket > ol");
             let bookTitle =
-              event.previousElementSibling.previousElementSibling.innerText;
+              event.parentNode.previousElementSibling.previousElementSibling
+                .innerText;
             let newListItem = document.createElement("li");
             newListItem.innerHTML = `<p class="my-0">${bookTitle}</p>`;
             basketOl.appendChild(newListItem);
