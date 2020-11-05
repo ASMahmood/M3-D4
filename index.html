@@ -50,7 +50,7 @@
         right: 0;
         text-overflow: ellipsis;
         background-color: rgba(255, 255, 255, 0.3);
-        backdrop-filter: blur(4px);
+        backdrop-filter: blur(8px);
         border-radius: 15px;
       }
     </style>
@@ -95,14 +95,14 @@
                                             <div class="card-text d-flex justify-content-around">
                                                 <a href="#" class="btn btn-primary">£ ${price}</a>
                                                 <a href="#" class="btn btn-primary">SKIP</a>
-                                            </div>                                      
+                                            </div>
                                         </div>
                                     </div>`;
 
               row.appendChild(card);
             });
           })
-          .then(() => addToCart());
+          .then(() => (addToCart(), removeBook()));
       };
 
       const addToCart = function () {
@@ -112,7 +112,7 @@
         console.log(buttons);
         buttons.forEach((event) =>
           event.addEventListener("click", (e) => {
-            let card = event.parentNode.parentNode;
+            let card = event.parentNode.parentNode.parentNode;
             card.classList.remove("bg-light");
             card.classList.add("text-white", "bg-success");
 
@@ -123,6 +123,19 @@
             let newListItem = document.createElement("li");
             newListItem.innerHTML = `<p class="my-0">${bookTitle}</p>`;
             basketOl.appendChild(newListItem);
+          })
+        );
+      };
+
+      const removeBook = function () {
+        const buttons = document.querySelectorAll(
+          ".card-text > a.btn:last-of-type"
+        );
+
+        buttons.forEach((event) =>
+          event.addEventListener("click", (e) => {
+            let card = event.parentNode.parentNode.parentNode;
+            card.classList.add("d-none");
           })
         );
       };
