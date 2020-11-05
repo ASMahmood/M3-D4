@@ -64,14 +64,8 @@
           type="search"
           placeholder="Search"
           aria-label="Search"
+          onkeydown="searchFilter()"
         />
-        <button
-          class="btn btn-outline-success my-2 my-sm-0"
-          onclick="searchFilter()"
-          type="submit"
-        >
-          Search
-        </button>
       </form>
     </nav>
 
@@ -156,20 +150,28 @@
       };
 
       const searchFilter = function () {
-        let input = document.querySelector("nav input").value;
+        let input = document.querySelector("nav input").value.toLowerCase();
         let books = document.querySelectorAll(".card");
         let titles = [];
         books.forEach((element) => {
           titles.push(element.lastElementChild.firstElementChild);
         });
-        if (input.length >= 3) {
+        if (input.length >= 2) {
+          books.forEach((card) => {
+            card.classList.add("d-none");
+          });
           const matchingTitles = titles.filter((title) =>
-            title.innerText.includes(input)
+            title.innerText.toLowerCase().includes(input)
           );
           const fitleredCards = matchingTitles.map(
             (title) => title.parentNode.parentNode
           );
-          console.log(fitleredCards);
+
+          fitleredCards.forEach((card) => card.classList.remove("d-none"));
+        } else {
+          books.forEach((card) => {
+            card.classList.remove("d-none");
+          });
         }
       };
     </script>
