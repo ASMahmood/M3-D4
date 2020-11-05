@@ -46,7 +46,7 @@
         font-size: 12px;
         width: 200px;
         height: auto;
-        top: 3vh;
+        top: 10vh;
         right: 0;
         text-overflow: ellipsis;
         background-color: rgba(255, 255, 255, 0.3);
@@ -57,7 +57,22 @@
   </head>
   <body>
     <nav class="navbar navbar-light bg-light">
-      <span class="navbar-brand mb-0 mx-auto h1">Books 'n 'shit</span>
+      <span class="navbar-brand mb-0 h1">Books 'n 'shit</span>
+      <form class="form-inline">
+        <input
+          class="form-control mr-sm-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button
+          class="btn btn-outline-success my-2 my-sm-0"
+          onclick="searchFilter()"
+          type="submit"
+        >
+          Search
+        </button>
+      </form>
     </nav>
 
     <div class="container">
@@ -93,7 +108,7 @@
                                                 <p>${asin}</p>
                                             </div>
                                             <div class="card-text d-flex justify-content-around">
-                                                <a href="#" class="btn btn-primary">£ ${price}</a>
+                                                <a href="#" class="btn btn-primary">£${price}</a>
                                                 <a href="#" class="btn btn-primary">SKIP</a>
                                             </div>
                                         </div>
@@ -138,6 +153,24 @@
             card.classList.add("d-none");
           })
         );
+      };
+
+      const searchFilter = function () {
+        let input = document.querySelector("nav input").value;
+        let books = document.querySelectorAll(".card");
+        let titles = [];
+        books.forEach((element) => {
+          titles.push(element.lastElementChild.firstElementChild);
+        });
+        if (input.length >= 3) {
+          const matchingTitles = titles.filter((title) =>
+            title.innerText.includes(input)
+          );
+          const fitleredCards = matchingTitles.map(
+            (title) => title.parentNode.parentNode
+          );
+          console.log(fitleredCards);
+        }
       };
     </script>
     <script
